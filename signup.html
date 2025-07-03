@@ -2,16 +2,80 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Sign Up</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up | Finance Point</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <form id="signup-form">
-    <h2>Sign Up</h2>
-    <input type="email" id="email" placeholder="Email" required />
-    <input type="password" id="password" placeholder="Password" required />
-    <button type="submit">Sign Up</button>
-  </form>
-  <script type="module" src="firebase-setup.js"></script>
+<body class="flex items-center justify-center min-h-screen bg-blue-50">
+  <div class="bg-white shadow-lg rounded-2xl p-6 w-full max-w-md">
+    <h1 class="text-2xl font-bold mb-4 text-center text-blue-700">Create Account</h1>
+
+    <form id="signupForm" class="space-y-4">
+      <input type="text" id="fullName" placeholder="Full Name" required class="w-full px-4 py-2 border rounded-md"/>
+      <input type="text" id="matricNo" placeholder="Matric Number" required class="w-full px-4 py-2 border rounded-md"/>
+      <input type="email" id="email" placeholder="Email Address" required class="w-full px-4 py-2 border rounded-md"/>
+      <input type="password" id="password" placeholder="Password" required class="w-full px-4 py-2 border rounded-md"/>
+
+      <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 transition">Sign Up</button>
+
+      <p class="text-center text-sm mt-2">
+        Already have an account? <a href="login.html" class="text-blue-600 hover:underline">Login here</a>
+      </p>
+      <p id="errorMsg" class="text-sm text-red-500 text-center hidden mt-2"></p>
+    </form>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import {
+      getAuth,
+      createUserWithEmailAndPassword
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import {
+      getFirestore,
+      setDoc,
+      doc
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCCmHX-ofSnqvWVfKf9FAbO6TKQCcHhglY",
+      authDomain: "financepoint-aaua.firebaseapp.com",
+      projectId: "financepoint-aaua",
+      storageBucket: "financepoint-aaua.appspot.com",
+      messagingSenderId: "954231940143",
+      appId: "1:954231940143:web:replace_with_real_id"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const signupForm = document.getElementById("signupForm");
+    const errorMsg = document.getElementById("errorMsg");
+
+    signupForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const fullName = document.getElementById("fullName").value.trim();
+      const matricNo = document.getElementById("matricNo").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        await setDoc(doc(db, "users", user.uid), {
+          fullName,
+          matricNo,
+          email
+        });
+
+        window.location.href = "index.html";
+      } catch (error) {
+        errorMsg.textContent = "Signup failed: " + error.message;
+        errorMsg.classList.remove("hidden");
+      }
+    });
+  </script>
 </body>
 </html>
