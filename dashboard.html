@@ -1,61 +1,94 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Finance Point | Dashboard</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>Finance Point Dashboard</title>
   <style>
     body {
-      font-family: 'Poppins', sans-serif;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
     }
-    .sidebar-hidden {
-      transform: translateX(-100%);
+    header {
+      background-color: #1e40af;
+      color: white;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    .sidebar-visible {
-      transform: translateX(0);
+    #menuToggle {
+      font-size: 24px;
+      background: none;
+      border: none;
+      color: white;
+    }
+    #sidebar {
+      width: 220px;
+      background-color: #f8fafc;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: -220px;
+      padding: 20px;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+      transition: left 0.3s ease;
+    }
+    #sidebar.show {
+      left: 0;
+    }
+    #sidebar a {
+      display: block;
+      margin-bottom: 15px;
+      color: #1e40af;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    main {
+      margin-left: 0;
+      padding: 20px;
+    }
+    @media (min-width: 768px) {
+      #sidebar {
+        left: 0;
+      }
+      main {
+        margin-left: 220px;
+      }
+      #menuToggle {
+        display: none;
+      }
     }
   </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body>
 
-  <!-- Header -->
-  <header class="bg-white shadow p-4 flex justify-between items-center md:pl-64">
-    <button id="menuToggle" class="text-2xl md:hidden">&#9776;</button>
-    <h1 class="text-xl font-bold text-blue-700">Finance Point</h1>
-    <span class="hidden md:block text-sm text-gray-500">Created by OBA</span>
-  </header>
+<header>
+  <button id="menuToggle">&#9776;</button>
+  <h1>Finance Point</h1>
+</header>
 
-  <!-- Sidebar -->
-  <aside id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-white shadow-lg p-4 space-y-4 sidebar-hidden md:sidebar-visible transition-transform duration-300 z-50">
-    <nav>
-      <ul class="space-y-3">
-        <li><a href="dashboard.html" class="text-blue-700 font-semibold">🏠 Dashboard</a></li>
-        <li><a href="executives.html" class="hover:text-blue-600">👥 Executives</a></li>
-        <li><a href="events.html" class="hover:text-blue-600">📅 Events</a></li>
-        <li><a href="news.html" class="hover:text-blue-600">📰 News</a></li>
-        <li><a href="contact.html" class="hover:text-blue-600">📞 Contact PRO</a></li>
-      </ul>
-    </nav>
-  </aside>
+<div id="sidebar">
+  <a href="dashboard.html">🏠 Dashboard</a>
+  <a href="executives.html">👥 Executives</a>
+  <a href="events.html">📅 Events</a>
+  <a href="news.html">📰 News</a>
+  <a href="contact.html">📞 Contact PRO</a>
+</div>
 
-  <!-- Main Content -->
-  <main class="p-6 md:ml-64">
-    <h2 class="text-2xl font-bold mb-2">Welcome to Your Dashboard</h2>
-    <p class="text-gray-700">Use the ☰ menu to explore Finance Point. More updates will be added soon!</p>
-  </main>
+<main>
+  <h2>Welcome, AAUA Finance Student!</h2>
+  <p>This is a working sidebar template without Tailwind. Let’s confirm this works first.</p>
+</main>
 
-  <!-- Toggle Script -->
-  <script>
-    const sidebar = document.getElementById("sidebar");
-    const toggle = document.getElementById("menuToggle");
+<script>
+  const sidebar = document.getElementById('sidebar');
+  const toggle = document.getElementById('menuToggle');
 
-    toggle.addEventListener("click", () => {
-      sidebar.classList.toggle("sidebar-hidden");
-      sidebar.classList.toggle("sidebar-visible");
-    });
-  </script>
+  toggle.addEventListener('click', () => {
+    sidebar.classList.toggle('show');
+  });
+</script>
 
 </body>
 </html>
