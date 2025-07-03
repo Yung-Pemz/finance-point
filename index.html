@@ -1,14 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Finance Point AAUA</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <div class="link-buttons">
-    <a href="signup.html">Sign Up</a>
-    <a href="login.html">Login</a>
-  </div>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Finance Point | Dashboard</title>
+    <link rel="stylesheet" href="styles.css"/>
+    <link rel="icon" href="/favicon.png" />
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100">
+    <div class="flex min-h-screen">
+      <!-- Sidebar -->
+      <aside class="w-64 bg-white shadow-xl">
+        <div class="p-4 text-xl font-bold border-b border-gray-200">Finance Point</div>
+        <nav class="p-4">
+          <ul class="space-y-4">
+            <li><a href="#" class="block text-blue-600 font-semibold">Dashboard</a></li>
+            <li><a href="#" class="block text-gray-700">Meet Your Executives</a></li>
+            <li><a href="#" class="block text-gray-700">Events (Coming Soon)</a></li>
+            <li><a href="#" class="block text-gray-700">News (Coming Soon)</a></li>
+            <li><a href="#" class="block text-gray-700">Contact PRO</a></li>
+            <li><a href="#" class="block text-red-500">Logout</a></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- Main Dashboard Content -->
+      <main class="flex-1">
+        <!-- Topbar -->
+        <header class="bg-white shadow-md p-4 flex justify-between items-center">
+          <h1 class="text-xl font-semibold">Welcome to Finance Point</h1>
+          <p class="text-sm text-gray-500">Created by OBA</p>
+        </header>
+
+        <section class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="bg-white rounded-2xl shadow p-4">
+            <h2 class="text-lg font-bold mb-2">User Info</h2>
+            <p id="user-info" class="text-gray-700 text-sm">Loading...</p>
+          </div>
+
+          <div class="bg-white rounded-2xl shadow p-4">
+            <h2 class="text-lg font-bold mb-2">Meet Your Executives</h2>
+            <p class="text-gray-600 text-sm">Coming Soon</p>
+          </div>
+
+          <div class="bg-white rounded-2xl shadow p-4">
+            <h2 class="text-lg font-bold mb-2">Events</h2>
+            <p class="text-gray-600 text-sm">Coming Soon</p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+      import {
+        getAuth,
+        onAuthStateChanged,
+        signOut
+      } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+      import {
+        getFirestore,
+        doc,
+        getDoc
+      } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyCCmHX-ofSnqvWVfKf9FAbO6TKQCcHhglY",
+        authDomain: "financepoint-aaua.firebaseapp.com",
+        projectId: "financepoint-aaua",
+        storageBucket: "financepoint-aaua.appspot.com",
+        messagingSenderId: "954231940143",
+        appId: "1:954231940143:web:replace_with_real_id"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
+
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          const userDoc = await getDoc(doc(db, "users", user.uid));
+          const data = userDoc.data();
+          document.getElementById("user-info").innerText =
+            `Name: ${data.fullName}\nMatric: ${data.matricNo}\nEmail: ${user.email}`;
+        } else {
+          window.location.href = "login.html";
+        }
+      });
+    </script>
+  </body>
 </html>
