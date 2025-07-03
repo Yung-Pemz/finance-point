@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dashboard | Finance Point</title>
+  <title>Finance Point | Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     .sidebar-hidden {
@@ -14,33 +14,32 @@
     }
   </style>
 </head>
-<body class="bg-gray-100 min-h-screen">
+<body class="bg-gray-100">
 
-  <!-- Topbar -->
+  <!-- Header -->
   <header class="bg-white shadow p-4 flex justify-between items-center md:pl-64">
     <button id="menuToggle" class="text-2xl md:hidden">&#9776;</button>
-    <h1 class="text-xl font-bold text-blue-700">Finance Point Dashboard</h1>
-    <p class="text-sm text-gray-600 hidden md:block">Created by OBA</p>
+    <h1 class="text-xl font-bold text-blue-700">Finance Point</h1>
+    <span class="hidden md:block text-sm text-gray-500">Created by OBA</span>
   </header>
 
   <!-- Sidebar -->
-  <aside id="sidebar" class="fixed md:relative top-0 left-0 h-full w-64 bg-white shadow-lg p-4 space-y-4 sidebar-hidden md:sidebar-visible transition-transform duration-300 z-50">
+  <aside id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-white shadow-lg p-4 space-y-4 sidebar-hidden md:sidebar-visible transition-transform duration-300 z-50">
     <nav>
       <ul class="space-y-3">
-        <li><a href="dashboard.html" class="block text-blue-600 font-semibold">🏠 Dashboard</a></li>
-        <li><a href="executives.html" class="block text-gray-700">👥 Meet Your Executives</a></li>
-        <li><a href="events.html" class="block text-gray-700">📅 Events</a></li>
-        <li><a href="news.html" class="block text-gray-700">📰 News</a></li>
-        <li><a href="contact.html" class="block text-gray-700">📞 Contact PRO</a></li>
-        <li><button onclick="logout()" class="block w-full text-left text-red-500 mt-4">🚪 Logout</button></li>
+        <li><a href="dashboard.html" class="text-blue-600 font-bold">🏠 Dashboard</a></li>
+        <li><a href="executives.html" class="text-gray-700 hover:text-blue-600">👥 Meet Your Executives</a></li>
+        <li><a href="events.html" class="text-gray-700 hover:text-blue-600">📅 Events</a></li>
+        <li><a href="news.html" class="text-gray-700 hover:text-blue-600">📰 News</a></li>
+        <li><a href="contact.html" class="text-gray-700 hover:text-blue-600">📞 Contact PRO</a></li>
       </ul>
     </nav>
   </aside>
 
-  <!-- Main content -->
-  <main class="md:ml-64 p-6">
-    <h2 class="text-2xl font-bold mb-4 text-gray-800">Welcome to Finance Point</h2>
-    <p class="text-gray-700">Use the sidebar to explore all departmental sections. Stay informed and connected!</p>
+  <!-- Main Content -->
+  <main class="p-6 md:ml-64">
+    <h2 class="text-2xl font-bold mb-2">Welcome, AAUA Finance Student!</h2>
+    <p class="text-gray-700">Use the sidebar ☰ to explore events, meet executives, read updates, or contact the PRO directly.</p>
   </main>
 
   <!-- Toggle Script -->
@@ -52,17 +51,6 @@
       sidebar.classList.toggle("sidebar-hidden");
       sidebar.classList.toggle("sidebar-visible");
     });
-  </script>
-
-  <!-- Firebase Logout -->
-  <script type="module">
-    import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-    const auth = getAuth();
-    window.logout = function () {
-      signOut(auth).then(() => {
-        window.location.href = "login.html";
-      });
-    };
   </script>
 
 </body>
