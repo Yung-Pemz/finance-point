@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Finance Point | Dashboard</title>
 
-  <!-- Tailwind CSS -->
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Google Fonts: Poppins -->
@@ -15,15 +15,12 @@
     body {
       font-family: 'Poppins', sans-serif;
     }
-
     .sidebar-hidden {
       transform: translateX(-100%);
     }
     .sidebar-visible {
       transform: translateX(0);
     }
-
-    /* Scrollbar Styling */
     ::-webkit-scrollbar {
       width: 6px;
     }
@@ -62,7 +59,7 @@
     <p class="text-gray-700 text-lg">Explore departmental activities, connect with executives, and stay updated.</p>
   </main>
 
-  <!-- Toggle Script -->
+  <!-- Sidebar Toggle Script -->
   <script>
     const sidebar = document.getElementById("sidebar");
     const toggle = document.getElementById("menuToggle");
@@ -73,13 +70,30 @@
     });
   </script>
 
-  <!-- Firebase Logout (if using Firebase) -->
+  <!-- Firebase Auth & Logout -->
   <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-    const auth = getAuth();
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCCmHX-ofSnqvWVfKf9FAbO6TKQCcHhglY",
+      authDomain: "financepoint-aaua.firebaseapp.com",
+      projectId: "financepoint-aaua",
+      storageBucket: "financepoint-aaua.appspot.com",
+      messagingSenderId: "954231940143",
+      appId: "1:954231940143:web:fdcdd1df45b82d9d9ad2a4"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
     window.logout = function () {
       signOut(auth).then(() => {
+        alert("Logout successful.");
         window.location.href = "login.html";
+      }).catch((error) => {
+        console.error("Logout error:", error.message);
+        alert("Logout failed.");
       });
     };
   </script>
